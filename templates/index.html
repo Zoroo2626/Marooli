@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Marooli — Map your path. Predict your future. AI-powered decision intelligence.">
+    <title>Marooli — Decision Intelligence Engine</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ========== DYNAMIC BACKGROUND ========== -->
+    <div class="dynamic-bg" id="dynamic-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- ========== WALKTHROUGH ========== -->
+    <div id="walkthrough-overlay" class="walkthrough-overlay hidden">
+        <div class="walkthrough-backdrop"></div>
+        <div class="walkthrough-tooltip" id="walkthrough-tooltip">
+            <div class="walkthrough-step-indicator">
+                <span id="wt-step-num">1</span> / <span id="wt-step-total">4</span>
+            </div>
+            <p id="wt-text"></p>
+            <div class="walkthrough-actions">
+                <button id="wt-skip" class="wt-btn wt-btn-skip">Skip</button>
+                <button id="wt-next" class="wt-btn wt-btn-next">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== LANDING ========== -->
+    <section id="landing-screen" class="screen active">
+        <div class="landing-content">
+            <div class="logo-mark">
+                <div class="logo-avatar">
+                    <img src="/static/avatar.png" alt="Marooli" width="72" height="72">
+                </div>
+            </div>
+            <h1 class="landing-title">Marooli</h1>
+            <p class="landing-subtitle">Map your path. Predict your future.</p>
+
+            <div class="mode-cards" id="mode-cards">
+                <div class="mode-card" id="card-reverse" tabindex="0" role="button" aria-label="Reverse Path Finder">
+                    <div class="mode-card-icon">
+                        <img src="/static/icon_reverse.png" alt="Paths" width="44" height="44">
+                    </div>
+                    <h2 class="mode-card-title">Reverse Path Finder</h2>
+                    <p class="mode-card-desc">Start from your goal. Discover every realistic route to get there.</p>
+                    <span class="mode-card-tag">Goal → Paths</span>
+                </div>
+                <div class="mode-card" id="card-simulate" tabindex="0" role="button" aria-label="Future Simulator">
+                    <div class="mode-card-icon">
+                        <img src="/static/icon_simulate.png" alt="Future" width="44" height="44">
+                    </div>
+                    <h2 class="mode-card-title">Future Simulator</h2>
+                    <p class="mode-card-desc">Feed it a decision. See where you'll be in 1, 5, and 10 years.</p>
+                    <span class="mode-card-tag">Decision → Outcomes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CHAT ========== -->
+    <section id="chat-screen" class="screen">
+        <header class="chat-header">
+            <button id="back-btn" class="header-btn" aria-label="Go back">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M12 3 L6 9 L12 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="header-center">
+                <div class="header-avatar"><img src="/static/avatar.png" alt="M" width="28" height="28"></div>
+                <div class="header-info">
+                    <h2 class="header-title" id="header-title">Marooli</h2>
+                    <span class="header-mode-tag" id="header-mode-tag">Reverse Path Finder</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="mode-toggle" id="mode-toggle">
+                    <button class="toggle-opt active" data-mode="simple" id="toggle-simple">Simple</button>
+                    <button class="toggle-opt" data-mode="detailed" id="toggle-detailed">Detailed</button>
+                </div>
+                <button id="btn-history" class="header-btn" aria-label="History" title="History">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3 L9 9 L13 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+                </button>
+                <button id="btn-flowchart" class="header-btn" aria-label="Visual Map" title="Visual Map">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="6" height="4.5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="11" y="1" width="6" height="4.5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="6" y="12.5" width="6" height="4.5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M4 5.5 L4 8.5 L9 8.5 L9 12.5 M14 5.5 L14 8.5 L9 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search -->
+        <div class="search-wrap">
+            <div class="search-bar">
+                <svg class="search-icon" width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10 L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                <input type="text" id="search-input" placeholder="Search results..." autocomplete="off">
+                <button id="search-clear" class="search-clear hidden">×</button>
+            </div>
+        </div>
+
+        <!-- Web search indicator -->
+        <div class="web-search-indicator hidden" id="web-indicator">
+            <span class="web-dot"></span>
+            <span>Searching the web...</span>
+        </div>
+
+        <!-- Chat body -->
+        <div class="chat-body" id="chat-body">
+            <div class="chat-messages" id="chat-messages"></div>
+        </div>
+
+        <!-- Input -->
+        <div class="chat-input-area">
+            <div class="chat-input-wrap">
+                <textarea id="chat-input" placeholder="Describe your goal or decision..." rows="1"></textarea>
+                <button id="send-btn" class="send-btn" aria-label="Send">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9 L15 3 L9 15 L8 10 L3 9Z" fill="currentColor"/></svg>
+                </button>
+            </div>
+            <div class="input-hints">
+                <span class="hint-key">Enter</span> send · <span class="hint-key">Shift+Enter</span> new line · <span class="hint-key">Esc</span> back
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FULL SCREEN FLOWCHART ========== -->
+    <section id="flowchart-screen" class="screen">
+        <header class="flow-header">
+            <button id="flow-back" class="header-btn" aria-label="Back to chat">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M12 3 L6 9 L12 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <h2 class="flow-title">Visual Map</h2>
+            <div class="flow-actions">
+                <button id="flow-export" class="header-btn" title="Copy as text">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="5" y="2" width="10" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 6 L3 16 L11 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </header>
+        <div class="flow-canvas-wrap" id="flow-canvas-wrap">
+            <canvas id="flowchart-canvas"></canvas>
+        </div>
+    </section>
+
+    <!-- ========== HISTORY SIDEBAR ========== -->
+    <div class="history-panel hidden" id="history-panel">
+        <div class="history-header">
+            <h3>History</h3>
+            <button id="history-close" class="history-close">×</button>
+        </div>
+        <div class="history-list" id="history-list"></div>
+        <button id="history-clear" class="history-clear-btn">Clear History</button>
+    </div>
+    <div class="history-backdrop hidden" id="history-backdrop"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
