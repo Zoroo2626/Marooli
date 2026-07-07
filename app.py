@@ -17,8 +17,26 @@ MAX_HISTORY = 50
 
 def save_history_entry(entry):
     try:
-        with open(HISTORY_FILE, "a", encoding="utf-8") as f:
-            f.write(json.dumps(entry) + "\n")
+        entries = []
+        try:
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line:
+                        try:
+                            entries.append(json.loads(line))
+                        except json.JSONDecodeError:
+                            continue
+        except FileNotFoundError:
+            pass
+
+        entries.append(entry)
+        if len(entries) > MAX_HISTORY:
+            entries = entries[-MAX_HISTORY:]
+
+        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+            for e in entries:
+                f.write(json.dumps(e) + "\n")
     except Exception:
         pass
 
